@@ -40,6 +40,22 @@
     <main>
         <section id="videos" class="md:container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 py-10"></section>
     </main>
+    <button id="showModalData" class="btn hidden" onclick="customModal.showModal()">
+        open modal
+      </button>
+      <dialog id="customModal" class="modal modal-bottom sm:modal-middle">
+        <div class="modal-box">
+          <div id="modal-content">
+  
+          </div>
+          <div class="modal-action">
+            <form method="dialog">
+              <!-- if there is a button in form, it will close the modal -->
+              <button class="btn">Close</button>
+            </form>
+          </div>
+        </div>
+      </dialog>
     <script src="js/video.js"></script>
 </body>
 </html>
