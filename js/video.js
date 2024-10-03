@@ -23,29 +23,69 @@ function getTimeString(time) {
 
     return timeString.trim() + ' ago';
 }
+
+const removeActiveClass = () => {
+    const buttons = document.getElementsByClassName("category-btn");
+    console.log(buttons);
+    for (let btn of buttons) {
+      btn.classList.remove("active");
+    }
+};
+
 const loadCategories = () => {
     fetch("https://openapi.programming-hero.com/api/phero-tube/categories")
     .then((res) => res.json())
     .then((data) => displayCategories(data.categories))
     .catch((error) => console.log(error))
 }
+
 const loadVideos = () => {
     fetch("https://openapi.programming-hero.com/api/phero-tube/videos")
     .then((res) => res.json())
     .then((data) => displayVideos(data.videos))
     .catch((error) => console.log(error))
 }
+
+const loadCategoryVideos = (id) => {
+    fetch(`https://openapi.programming-hero.com/api/phero-tube/category/${id}`)
+      .then((res) => res.json())
+      .then((data) => {
+        removeActiveClass();
+        const activeBtn = document.getElementById(`btn-${id}`);
+        activeBtn.classList.add("active");
+        displayVideos(data.category);
+      })
+      .catch((error) => console.log(error));
+};
+
 const displayCategories = (categories) =>{
     const categoriesContainer = document.getElementById('categories')
     categories.forEach((item) => {
-        const button = document.createElement('button')
-        button.classList = 'btn font-bold'
-        button.innerText = item.category;
-        categoriesContainer.append(button);
+        const buttonContainer = document.createElement('div')
+        buttonContainer.innerHTML = `
+        <button id="btn-${item.category_id}" onclick="loadCategoryVideos(${item.category_id})" class="btn category-btn">
+         ${item.category}
+        </button>
+      `
+        categoriesContainer.append(buttonContainer);
     });
 }
+
 const displayVideos = (videos) =>{
-    const videosContainer = document.getElementById('videos')
+    const videoContainer = document.getElementById("videos");
+    videoContainer.innerHTML = "";
+    if (videos.length == 0) {
+        videoContainer.classList.remove("grid");
+        videoContainer.innerHTML = `
+        <div class="min-h-[300px] flex flex-col gap-5 justify-center items-center">
+        
+          <img src="asset/Icon.png" /> 
+          <h2 class="text-center text-xl font-bold">Oops!! Sorry, There is <br> no content here</h2> 
+        </div>`;
+    } 
+    else {
+        videoContainer.classList.add("grid");
+    }
     videos.forEach((video) => {
         const card = document.createElement('div')
         card.classList = 'card card-compact px-4 lg:px-0'
@@ -77,7 +117,7 @@ const displayVideos = (videos) =>{
             </div>
         </div>
         `
-        videosContainer.append(card);
+        videoContainer.append(card);
     });
 }
 loadCategories()
