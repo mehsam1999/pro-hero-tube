@@ -7,12 +7,13 @@
     <link href="https://cdn.jsdelivr.net/npm/daisyui@latest/dist/full.min.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="asset/playButton.png" type="image/x-icon">
 
 </head>
 <body>
     <header>
-        <nav class="md:container mx-auto flex items-center justify-between py-4 border-b">
-            <div class="logo w-[100px]">
+        <nav class="md:container mx-auto flex gap-4 items-center justify-between px-4 lg:px-0 py-4 border-b">
+            <div class="logo w-[150px]">
                 <img src="asset/Logo.png" alt="">
             </div>
             <div class="search">
@@ -31,11 +32,14 @@
                 </label>
             </div>
             <div class="sort">
-                <button class="btn font-bold">Sort by view</button>
+                <button class="btn font-bold">Sort</button>
             </div>
         </nav>
         <div id="categories" class="flex gap-4 justify-center py-4"></div>
     </header>
+    <main>
+        <section id="videos" class="md:container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 py-10"></section>
+    </main>
     <script src="js/video.js"></script>
 </body>
 </html>
